@@ -506,3 +506,6 @@ def clear_chat_history(user_id):
 
     conn.commit()
     conn.close()
+
+# Create tables automatically when the module is imported
+create_tables()
