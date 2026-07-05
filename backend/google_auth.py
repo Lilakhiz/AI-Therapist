@@ -16,9 +16,19 @@ from backend.database import (
 
 load_dotenv()
 
+CLIENT_ID = st.secrets.get(
+    "GOOGLE_CLIENT_ID",
+    os.getenv("GOOGLE_CLIENT_ID"),
+)
+
+CLIENT_SECRET = st.secrets.get(
+    "GOOGLE_CLIENT_SECRET",
+    os.getenv("GOOGLE_CLIENT_SECRET"),
+)
+
 oauth = OAuth2Component(
-    client_id=os.getenv("GOOGLE_CLIENT_ID"),
-    client_secret=os.getenv("GOOGLE_CLIENT_SECRET"),
+    client_id=CLIENT_ID,
+    client_secret=CLIENT_SECRET,
     authorize_endpoint="https://accounts.google.com/o/oauth2/v2/auth",
     token_endpoint="https://oauth2.googleapis.com/token",
     refresh_token_endpoint="https://oauth2.googleapis.com/token",
@@ -39,7 +49,10 @@ def login():
 
     result = oauth.authorize_button(
         "Continue with Google",
-        redirect_uri="http://localhost:8501",
+        redirect_uri=st.secrets.get(
+                                        "REDIRECT_URI",
+                                        "http://localhost:8501",
+                                    ),
         scope="openid email profile",
         key="google",
         use_container_width=True,

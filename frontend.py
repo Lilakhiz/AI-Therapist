@@ -171,7 +171,9 @@ def mood_changed():
         st.session_state.mood
     )
 
-BACKEND_URL = "http://localhost:8000/ask"
+import os
+
+BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000/ask")
 
 
 
