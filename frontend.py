@@ -154,7 +154,7 @@ if (
 
         st.success("Profile saved!")
 
-        st.rerun()
+       # st.rerun()
 
     st.stop()
 
