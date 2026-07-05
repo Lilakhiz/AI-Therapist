@@ -41,12 +41,6 @@ from backend.database import get_user_by_id
 #login
 if not is_logged_in():
 
-    st.set_page_config(
-        page_title="SafeSpace",
-        page_icon="🧠",
-        layout="centered"
-    )
-
     st.markdown(
         "<h1 style='text-align:center;'>🧠 SafeSpace</h1>",
         unsafe_allow_html=True,
