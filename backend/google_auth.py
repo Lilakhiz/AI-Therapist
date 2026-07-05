@@ -50,7 +50,7 @@ def login():
     result = oauth.authorize_button(
         "Continue with Google",
         redirect_uri=st.secrets.get(
-                                        "https://ai-therapist-by-akhilesh.streamlit.app/",
+                                        "REDIRECT_URI",
                                         "http://localhost:8501",
                                     ),
         scope="openid email profile",
