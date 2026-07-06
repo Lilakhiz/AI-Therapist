@@ -158,12 +158,17 @@ if not is_logged_in():
             if st.button("Create Account", use_container_width=True):
                 ok, user = signup(st.session_state.pending_name, st.session_state.pending_email, st.session_state.pending_password, phone)
                 if ok:
-                    st.success("Account created successfully!")
-                    # Clean up the signup session states so it doesn't loop back here
-                    for key in ["pending_name", "pending_email", "pending_password", "signup_name", "signup_email", "signup_password", "signup_confirm", "signup_phone", "signup_step"]:
-                        st.session_state.pop(key, None)
+                    st.success("Account created successfully! Logging you in...")
                     
-                    # Force a rerun so your app catches the logged_in state from auth.py
+                    # 1. Clear out step 2 tracking
+                    st.session_state.signup_step = 1 
+                    
+                    # 2. Wipe the widget inputs completely from memory
+                    for key in ["signup_name", "signup_email", "signup_password", "signup_confirm", "signup_phone", "pending_name", "pending_email", "pending_password"]:
+                        if key in st.session_state:
+                            del st.session_state[key]
+                    
+                    # 3. Now safely rerun into the dashboard
                     st.rerun()
                 else:
 
