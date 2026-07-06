@@ -565,16 +565,22 @@ if st.session_state.page == "chat":
             thinking.markdown("💭 SafeSpace is thinking...")
 
             try:
+                st.write("Backend URL:", BACKEND_URL)
+
                 res = requests.post(
                     BACKEND_URL,
                     json={
-                            "user_id": user_id,
-                            "message": prompt
-                        },
+                        "user_id": user_id,
+                        "message": prompt
+                    },
                     timeout=60
                 )
 
+                st.write("Status Code:", res.status_code)
+                st.write("Raw Response:", res.text)
+
                 res.raise_for_status()
+
                 data = res.json()
                 response = data["response"]
                 therapists = data.get("therapists", [])
