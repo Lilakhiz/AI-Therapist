@@ -7,6 +7,7 @@ from backend.location import extract_city
 from backend.therapist_locator import find_therapists
 from backend.emergency import call_emergency
 from backend.cbt import get_cbt
+from backend.emergency import call_emergency
 
 
 
@@ -49,7 +50,7 @@ async def ask(query: Query):
         
     # Emergency call
     if crisis:
-        call_emergency()
+        call_emergency(query.user_id)
 
     return {
         "response": response,
