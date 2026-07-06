@@ -95,6 +95,8 @@ def create_tables():
                         name TEXT,
 
                         email TEXT UNIQUE,
+                   
+                        password_hash TEXT,
 
                         picture TEXT,
 

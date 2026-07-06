@@ -21,11 +21,12 @@ from backend.mental_health_cards import get_daily_card
 from backend.cbt import(
     get_cbt
 )
-from backend.google_auth import (
+from backend.auth import (
     login,
     logout,
     is_logged_in,
-    current_user
+    current_user,
+    signup,
 )
 
 st.set_page_config(
@@ -41,61 +42,95 @@ from backend.database import get_user_by_id
 #login
 if not is_logged_in():
 
-    st.markdown(
-        "<h1 style='text-align:center;'>🧠 SafeSpace</h1>",
-        unsafe_allow_html=True,
-    )
+    st.title("🧠 SafeSpace")
+    st.caption("Your AI Mental Health Companion")
 
-    st.markdown(
-        "<h4 style='text-align:center;color:gray;'>Your AI Mental Health Companion</h4>",
-        unsafe_allow_html=True,
-    )
+    tab1, tab2 = st.tabs(["🔐 Login", "📝 Sign Up"])
 
-    st.markdown(
-        "<p style='text-align:center;'>Private • Secure • Always Available</p>",
-        unsafe_allow_html=True,
-    )
+    with tab1:
 
-    st.write("")
-
-    login()
-
-    st.markdown("---")
-
-    st.subheader("✨ Features")
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.info("🤖 AI Therapist")
-        st.info("😊 Mood Tracking")
-
-    with col2:
-        st.info("📝 Daily Journal")
-        st.info("🚨 Crisis Detection")
-
-    st.markdown("---")
-
-    st.markdown(
-        "<div style='text-align:center;'>Made with  by <b>Akhilesh</b></div>",
-        unsafe_allow_html=True,
-    )
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.link_button(
-            "🐙 GitHub",
-            "https://github.com/Lilakhiz?tab=repositories",
-            use_container_width=True,
+        email = st.text_input(
+            "Email",
+            key="login_email"
         )
 
-    with col2:
-        st.link_button(
-            "💼 LinkedIn",
-            "https://www.linkedin.com/in/karthik-akhilesh-kodukula-112742402/?isSelfProfile=true",
-            use_container_width=True,
+        password = st.text_input(
+            "Password",
+            type="password",
+            key="login_password"
         )
+
+        if st.button(
+            "Login",
+            use_container_width=True
+        ):
+
+            success = login(
+                email,
+                password
+            )
+
+            if success:
+                st.success("Welcome back!")
+                st.rerun()
+
+            else:
+                st.error("Invalid email or password.")
+
+    with tab2:
+
+        name = st.text_input(
+            "Name",
+            key="signup_name"
+
+        )
+
+        email = st.text_input(
+            "Email",
+            key="signup_email"
+        )
+
+        password = st.text_input(
+            "Password",
+            type="password",
+            key="signup_password"
+        )
+
+        confirm = st.text_input(
+            "Confirm Password",
+            type="password",
+            key="signup_confirm"
+        )
+
+        if st.button(
+            "Create Account",
+            use_container_width=True
+        ):
+
+            if password != confirm:
+
+                st.error("Passwords don't match.")
+
+            elif len(password) < 8:
+
+                st.error("Password must be at least 8 characters.")
+
+            else:
+
+                ok, msg = signup(
+                    name,
+                    email,
+                    password,
+                )
+
+                if ok:
+
+                    st.success(msg)
+                    st.info("You can now login.")
+
+                else:
+
+                    st.error(msg)
 
     st.stop()
 
@@ -188,8 +223,6 @@ if "mood_history" not in st.session_state:
 with st.sidebar:
 
     st.title("🧠 SafeSpace")
-
-    #st.image(user["picture"], width=70)
 
     st.write(f"### Hi {user['name']}")
 
