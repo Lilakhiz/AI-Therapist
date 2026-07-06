@@ -12,7 +12,8 @@ from backend.database import (
     get_mood_by_date,
     get_journal_by_date,
     get_chat_by_date,
-    clear_chat_history
+    clear_chat_history,
+    get_connection
 )
 from collections import Counter
 import calendar
@@ -37,6 +38,9 @@ st.set_page_config(
 
 
 from backend.database import get_user_by_id
+
+if "signup_step" not in st.session_state:
+    st.session_state.signup_step = 1
 
 
 #login
@@ -79,58 +83,105 @@ if not is_logged_in():
 
     with tab2:
 
-        name = st.text_input(
-            "Name",
-            key="signup_name"
+        if st.session_state.signup_step == 1:
 
-        )
+            name = st.text_input(
+                "Name",
+                key="signup_name"
+            )
 
-        email = st.text_input(
-            "Email",
-            key="signup_email"
-        )
+            email = st.text_input(
+                "Email",
+                key="signup_email"
+            )
 
-        password = st.text_input(
-            "Password",
-            type="password",
-            key="signup_password"
-        )
+            password = st.text_input(
+                "Password",
+                type="password",
+                key="signup_password"
+            )
 
-        confirm = st.text_input(
-            "Confirm Password",
-            type="password",
-            key="signup_confirm"
-        )
+            confirm = st.text_input(
+                "Confirm Password",
+                type="password",
+                key="signup_confirm"
+            )
 
-        if st.button(
-            "Create Account",
-            use_container_width=True
-        ):
+            if st.button(
+                "Continue",
+                use_container_width=True
+            ):
 
-            if password != confirm:
+                if password != confirm:
+                    st.error("Passwords don't match.")
 
-                st.error("Passwords don't match.")
+                elif len(password) < 8:
+                    st.error("Password must be at least 8 characters.")
 
-            elif len(password) < 8:
+                else:
 
-                st.error("Password must be at least 8 characters.")
+                    conn = get_connection()
+                    cur = conn.cursor()
 
-            else:
+                    cur.execute(
+                        "SELECT id FROM users WHERE email=?",
+                        (email,)
+                    )
+
+                    exists = cur.fetchone()
+
+                    conn.close()
+
+                    if exists:
+
+                        st.error(
+                            "An account with this email already exists."
+                        )
+
+                    else:
+
+                        st.session_state.signup_step = 2
+                        st.rerun()
+
+        else:
+            st.success("✅ Email available!")
+
+            phone = st.text_input(
+                "Phone Number",
+                key="signup_phone"
+            )
+
+            if st.button(
+                "Create Account",
+                use_container_width=True
+            ):
 
                 ok, msg = signup(
-                    name,
-                    email,
-                    password,
+                    st.session_state.signup_name,
+                    st.session_state.signup_email,
+                    st.session_state.signup_password,
+                    phone
                 )
 
                 if ok:
 
-                    st.success(msg)
-                    st.info("You can now login.")
+                    st.success("Account created successfully!")
+
+                    st.session_state.signup_step = 1
+
+                    del st.session_state.signup_name
+                    del st.session_state.signup_email
+                    del st.session_state.signup_password
+                    del st.session_state.signup_confirm
 
                 else:
 
                     st.error(msg)
+
+        if st.button("⬅ Back"):
+
+            st.session_state.signup_step = 1
+            st.rerun()
 
     st.stop()
 

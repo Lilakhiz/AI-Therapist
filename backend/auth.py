@@ -21,7 +21,7 @@ def verify_password(password, password_hash):
     )
 
 
-def signup(name, email, password):
+def signup(name, email, password, phone):
 
     conn = get_connection()
     cur = conn.cursor()
@@ -40,14 +40,16 @@ def signup(name, email, password):
         INSERT INTO users(
             name,
             email,
-            password_hash
+            password_hash,
+            phone
         )
         VALUES(?,?,?)
         """,
         (
             name,
             email,
-            hash_password(password)
+            hash_password(password),
+            phone
         )
     )
 
