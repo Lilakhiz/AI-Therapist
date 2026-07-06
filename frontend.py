@@ -140,6 +140,10 @@ if not is_logged_in():
 
                     else:
 
+                        st.session_state.pending_name = name
+                        st.session_state.pending_email = email
+                        st.session_state.pending_password = password
+
                         st.session_state.signup_step = 2
                         st.rerun()
 
@@ -157,24 +161,27 @@ if not is_logged_in():
             ):
 
                 ok, msg = signup(
-                    st.session_state.signup_name,
-                    st.session_state.signup_email,
-                    st.session_state.signup_password,
-                    phone
-                )
+                                    st.session_state.pending_name,
+                                    st.session_state.pending_email,
+                                    st.session_state.pending_password,
+                                    phone
+                                )
 
                 if ok:
 
-                    login(
-                        st.session_state.signup_email,
-                        st.session_state.signup_password
-                    )
+                    success = login(
+                                        st.session_state.pending_email,
+                                        st.session_state.pending_password
+                                    )
 
                     st.success("Welcome to SafeSpace! 🎉")
 
                     st.session_state.signup_step = 1
 
                     for key in [
+                        "pending_name",
+                        "pending_email",
+                        "pending_password",
                         "signup_name",
                         "signup_email",
                         "signup_password",
