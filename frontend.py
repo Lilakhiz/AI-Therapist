@@ -234,7 +234,7 @@ if (
 
         st.success("Profile saved!")
 
-    st.rerun()
+        st.rerun()
 
     st.stop()
 
@@ -278,6 +278,7 @@ with st.sidebar:
 
     if st.button("🚪 Logout", use_container_width=True):
         logout()
+        st.rerun()
 
     st.markdown("---")
 
