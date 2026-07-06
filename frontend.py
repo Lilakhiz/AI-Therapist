@@ -159,7 +159,12 @@ if not is_logged_in():
                 ok, user = signup(st.session_state.pending_name, st.session_state.pending_email, st.session_state.pending_password, phone)
                 if ok:
                     st.success("Account created successfully!")
-                    st.rerun() # This will immediately reload and log them in!
+                    # Clean up the signup session states so it doesn't loop back here
+                    for key in ["pending_name", "pending_email", "pending_password", "signup_name", "signup_email", "signup_password", "signup_confirm", "signup_phone", "signup_step"]:
+                        st.session_state.pop(key, None)
+                    
+                    # Force a rerun so your app catches the logged_in state from auth.py
+                    st.rerun()
                 else:
 
                     st.error(user)
