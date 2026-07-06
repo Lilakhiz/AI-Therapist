@@ -21,7 +21,7 @@ def verify_password(password, password_hash):
     )
 
 
-def signup(name, email, password, phone):
+def signup(name, email, password):
     conn = get_connection()
     cur = conn.cursor()
     
@@ -31,9 +31,9 @@ def signup(name, email, password, phone):
         return False, "Email already exists."
         
     cur.execute("""
-        INSERT INTO users(name, email, password_hash, phone)
-        VALUES(?,?,?,?)
-    """, (name, email, hash_password(password), phone))
+        INSERT INTO users(name, email, password_hash)
+        VALUES(?,?,?)
+    """, (name, email, hash_password(password)))
     conn.commit()
     
     # Get the newly created user BEFORE closing the connection
