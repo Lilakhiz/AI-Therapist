@@ -43,7 +43,7 @@ def signup(name, email, password, phone):
             password_hash,
             phone
         )
-        VALUES(?,?,?)
+        VALUES(?,?,?,?)
         """,
         (
             name,

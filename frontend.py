@@ -173,6 +173,7 @@ if not is_logged_in():
                     del st.session_state.signup_email
                     del st.session_state.signup_password
                     del st.session_state.signup_confirm
+                    del st.session_state.signup_phone
 
                 else:
 
