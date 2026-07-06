@@ -165,8 +165,7 @@ if not is_logged_in():
                     
                     # 2. Wipe the widget inputs completely from memory
                     for key in ["signup_name", "signup_email", "signup_password", "signup_confirm", "signup_phone", "pending_name", "pending_email", "pending_password"]:
-                        if key in st.session_state:
-                            del st.session_state[key]
+                        st.session_state.pop(key, None)
                     
                     # 3. Now safely rerun into the dashboard
                     st.rerun()
