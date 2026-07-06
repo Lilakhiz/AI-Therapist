@@ -50,7 +50,7 @@ async def ask(query: Query):
         
     # Emergency call
     if crisis:
-            call_emergency(query.user_id)
+            call_emergency()
 
 
 

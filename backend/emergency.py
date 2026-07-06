@@ -4,22 +4,11 @@ from backend.config import (
     TWILIO_ACCOUNT_SID,
     TWILIO_AUTH_TOKEN,
     TWILIO_FROM_NUMBER,
+    EMERGENCY_CONTACT
 )
 
-from backend.database import get_user_by_id
 
-
-def call_emergency(user_id):
-
-    user = get_user_by_id(user_id)
-
-    if not user:
-        return
-
-    emergency_contact = user["emergency_contact"]
-
-    if not emergency_contact:
-        return
+def call_emergency():
 
     client = Client(
         TWILIO_ACCOUNT_SID,
@@ -27,7 +16,7 @@ def call_emergency(user_id):
     )
 
     client.calls.create(
-        to=emergency_contact,
+        to=EMERGENCY_CONTACT,
         from_=TWILIO_FROM_NUMBER,
         url="http://demo.twilio.com/docs/voice.xml"
     )
