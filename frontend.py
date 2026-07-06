@@ -243,7 +243,10 @@ def mood_changed():
 
 import os
 
-BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000/ask")
+BACKEND_URL = st.secrets.get(
+    "BACKEND_URL",
+    "http://localhost:8000/ask"
+)
 
 
 
