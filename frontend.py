@@ -167,7 +167,7 @@ if not is_logged_in():
                                     phone
                                 )
 
-            if ok:
+                if ok:
 
                         st.session_state.user = user
 
@@ -186,7 +186,7 @@ if not is_logged_in():
                             st.session_state.pop(key, None)
 
                         st.rerun()
-            else:
+                else:
 
                     st.error(user)
                     if st.button("⬅ Back"):

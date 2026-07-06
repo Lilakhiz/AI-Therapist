@@ -54,12 +54,15 @@ def signup(name, email, password, phone):
     )
 
     conn.commit()
-    conn.close()
 
-    cur.execute("SELECT * FROM users WHERE email=?", (email,))
+    # Get the newly created user BEFORE closing the connection
+    cur.execute(
+        "SELECT * FROM users WHERE email=?",
+        (email,)
+    )
+
     user = cur.fetchone()
 
-    conn.commit()
     conn.close()
 
     return True, dict(user)
