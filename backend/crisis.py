@@ -54,4 +54,4 @@ def detect_crisis(user_message: str) -> bool:
 
     response = llm.invoke(messages).content.strip().upper()
 
-    return response == "YES"
+    return response.startswith("YES")
