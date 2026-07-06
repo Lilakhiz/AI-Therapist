@@ -22,49 +22,28 @@ def verify_password(password, password_hash):
 
 
 def signup(name, email, password, phone):
-
     conn = get_connection()
     cur = conn.cursor()
-
-    cur.execute(
-        "SELECT id FROM users WHERE email=?",
-        (email,)
-    )
-
+    
+    cur.execute("SELECT id FROM users WHERE email=?", (email,))
     if cur.fetchone():
         conn.close()
         return False, "Email already exists."
-
-    cur.execute(
-        """
-        INSERT INTO users(
-            name,
-            email,
-            password_hash,
-            phone
-        )
+        
+    cur.execute("""
+        INSERT INTO users(name, email, password_hash, phone)
         VALUES(?,?,?,?)
-        """,
-        (
-            name,
-            email,
-            hash_password(password),
-            phone
-        )
-    )
-
+    """, (name, email, hash_password(password), phone))
     conn.commit()
-
+    
     # Get the newly created user BEFORE closing the connection
-    cur.execute(
-        "SELECT * FROM users WHERE email=?",
-        (email,)
-    )
-
+    cur.execute("SELECT * FROM users WHERE email=?", (email,))
     user = cur.fetchone()
-
     conn.close()
-
+    
+    # --- ADD THIS LINE FOR AUTO LOGIN ---
+    st.session_state.user = dict(user) 
+    
     return True, dict(user)
 
 

@@ -155,44 +155,18 @@ if not is_logged_in():
                 key="signup_phone"
             )
 
-            if st.button(
-                "Create Account",
-                use_container_width=True
-            ):
-
-                ok, user = signup(
-                                    st.session_state.pending_name,
-                                    st.session_state.pending_email,
-                                    st.session_state.pending_password,
-                                    phone
-                                )
-
+            if st.button("Create Account", use_container_width=True):
+                ok, user = signup(st.session_state.pending_name, st.session_state.pending_email, st.session_state.pending_password, phone)
                 if ok:
-
-                        st.session_state.user = user
-
-                        # Cleanup
-                        for key in [
-                            "pending_name",
-                            "pending_email",
-                            "pending_password",
-                            "signup_name",
-                            "signup_email",
-                            "signup_password",
-                            "signup_confirm",
-                            "signup_phone",
-                            "signup_step",
-                        ]:
-                            st.session_state.pop(key, None)
-
-                        st.rerun()
+                    st.success("Account created successfully!")
+                    st.rerun() # This will immediately reload and log them in!
                 else:
 
                     st.error(user)
-                if st.button("⬅ Back"):
+                    if st.button("⬅ Back"):
 
-                    st.session_state.signup_step = 1
-                    st.rerun()
+                        #st.session_state.signup_step = 1
+                        st.rerun()
 
     st.stop()
 
