@@ -56,7 +56,13 @@ def signup(name, email, password, phone):
     conn.commit()
     conn.close()
 
-    return True, "Account created successfully."
+    cur.execute("SELECT * FROM users WHERE email=?", (email,))
+    user = cur.fetchone()
+
+    conn.commit()
+    conn.close()
+
+    return True, dict(user)
 
 
 def login(email, password):

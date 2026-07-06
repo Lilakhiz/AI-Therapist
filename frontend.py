@@ -160,7 +160,7 @@ if not is_logged_in():
                 use_container_width=True
             ):
 
-                ok, msg = signup(
+                ok, user = signup(
                                     st.session_state.pending_name,
                                     st.session_state.pending_email,
                                     st.session_state.pending_password,
@@ -169,32 +169,26 @@ if not is_logged_in():
 
                 if ok:
 
-                        if login(
-                            st.session_state.pending_email,
-                            st.session_state.pending_password
-                        ):
+                        st.session_state.user = user
 
-                            # Clean up signup state
-                            for key in [
-                                "pending_name",
-                                "pending_email",
-                                "pending_password",
-                                "signup_name",
-                                "signup_email",
-                                "signup_password",
-                                "signup_confirm",
-                                "signup_phone",
-                                "signup_step",
-                            ]:
-                                st.session_state.pop(key, None)
+                        # Cleanup
+                        for key in [
+                            "pending_name",
+                            "pending_email",
+                            "pending_password",
+                            "signup_name",
+                            "signup_email",
+                            "signup_password",
+                            "signup_confirm",
+                            "signup_phone",
+                            "signup_step",
+                        ]:
+                            st.session_state.pop(key, None)
 
-                            st.rerun()
-
-                        else:
-                            st.error("Automatic login failed.")
+                        st.rerun()
                 else:
 
-                    st.error(msg)
+                    st.error(user)
                     if st.button("⬅ Back"):
 
                         st.session_state.signup_step = 1
