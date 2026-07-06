@@ -180,16 +180,20 @@ user_id = user["id"]
 
 from backend.database import load_chat_history
 
-history = load_chat_history(user_id, date.today().isoformat())
+if "chat_history" not in st.session_state:
 
-st.session_state.chat_history = [
-    {
-        "role": row["role"],
-        "content": row["message"]
-    }
-    for row in history
-]
+    history = load_chat_history(
+        user_id,
+        date.today().isoformat()
+    )
 
+    st.session_state.chat_history = [
+        {
+            "role": row["role"],
+            "content": row["message"]
+        }
+        for row in history
+    ]
 db_user = get_user_by_id(user_id)
 
 if (
@@ -230,7 +234,7 @@ if (
 
         st.success("Profile saved!")
 
-       # st.rerun()
+    st.rerun()
 
     st.stop()
 
