@@ -165,15 +165,25 @@ if not is_logged_in():
 
                 if ok:
 
-                    st.success("Account created successfully!")
+                    login(
+                        st.session_state.signup_email,
+                        st.session_state.signup_password
+                    )
+
+                    st.success("Welcome to SafeSpace! 🎉")
 
                     st.session_state.signup_step = 1
 
-                    del st.session_state.signup_name
-                    del st.session_state.signup_email
-                    del st.session_state.signup_password
-                    del st.session_state.signup_confirm
-                    del st.session_state.signup_phone
+                    for key in [
+                        "signup_name",
+                        "signup_email",
+                        "signup_password",
+                        "signup_confirm",
+                        "signup_phone"
+                    ]:
+                        st.session_state.pop(key, None)
+
+                    st.rerun()
 
                 else:
 
