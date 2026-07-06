@@ -150,13 +150,9 @@ if not is_logged_in():
         else:
             st.success("✅ Email available!")
 
-            phone = st.text_input(
-                "Phone Number",
-                key="signup_phone"
-            )
 
             if st.button("Create Account", use_container_width=True):
-                ok, user = signup(st.session_state.pending_name, st.session_state.pending_email, st.session_state.pending_password, phone)
+                ok, user = signup(st.session_state.pending_name, st.session_state.pending_email, st.session_state.pending_password)
                 if ok:
                     st.success("Account created successfully! Logging you in...")
                     
