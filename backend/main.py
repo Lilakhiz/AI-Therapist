@@ -50,7 +50,11 @@ async def ask(query: Query):
         
     # Emergency call
     if crisis:
-        call_emergency(query.user_id)
+        try:
+            call_emergency(query.user_id)
+            print("Emergency call initiated.")
+        except Exception as e:
+            print("Twilio error:", e)
 
     return {
         "response": response,
