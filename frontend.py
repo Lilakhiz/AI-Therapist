@@ -189,10 +189,10 @@ if not is_logged_in():
                 else:
 
                     st.error(user)
-                    if st.button("⬅ Back"):
+                if st.button("⬅ Back"):
 
-                        st.session_state.signup_step = 1
-                        st.rerun()
+                    st.session_state.signup_step = 1
+                    st.rerun()
 
     st.stop()
 
