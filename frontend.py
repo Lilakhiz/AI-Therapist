@@ -169,37 +169,36 @@ if not is_logged_in():
 
                 if ok:
 
-                    success = login(
-                                        st.session_state.pending_email,
-                                        st.session_state.pending_password
-                                    )
+                        if login(
+                            st.session_state.pending_email,
+                            st.session_state.pending_password
+                        ):
 
-                    st.success("Welcome to SafeSpace! 🎉")
+                            # Clean up signup state
+                            for key in [
+                                "pending_name",
+                                "pending_email",
+                                "pending_password",
+                                "signup_name",
+                                "signup_email",
+                                "signup_password",
+                                "signup_confirm",
+                                "signup_phone",
+                                "signup_step",
+                            ]:
+                                st.session_state.pop(key, None)
 
-                    st.session_state.signup_step = 1
+                            st.rerun()
 
-                    for key in [
-                        "pending_name",
-                        "pending_email",
-                        "pending_password",
-                        "signup_name",
-                        "signup_email",
-                        "signup_password",
-                        "signup_confirm",
-                        "signup_phone"
-                    ]:
-                        st.session_state.pop(key, None)
-
-                    st.rerun()
-
+                        else:
+                            st.error("Automatic login failed.")
                 else:
 
                     st.error(msg)
+                    if st.button("⬅ Back"):
 
-        if st.button("⬅ Back"):
-
-            st.session_state.signup_step = 1
-            st.rerun()
+                        st.session_state.signup_step = 1
+                        st.rerun()
 
     st.stop()
 
