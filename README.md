@@ -6,7 +6,7 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-Backend-green)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Frontend-red)
 ![SQLite](https://img.shields.io/badge/SQLite-Database-lightblue)
-![Google OAuth](https://img.shields.io/badge/Auth-Google%20OAuth-orange)
+![Streamlit OAuth](https://img.shields.io/badge/Auth-Streamlit%20OAuth-orange)
 
 ---
 
@@ -29,9 +29,9 @@ Unlike a traditional chatbot, SafeSpace provides **persistent user accounts**, *
 
 ---
 
-### 🔐 Secure Google Authentication
+### 🔐 Secure Streamlit Authentication
 
-- Google OAuth Login
+- Streamlit OAuth Login
 - User-specific data
 - Secure session management
 
@@ -79,7 +79,7 @@ When severe distress is detected:
 
 Each user stores:
 
-- Google Account
+- Streamlit Account
 - Phone Number
 - Emergency Contact
 
@@ -99,7 +99,7 @@ Unlike temporary chatbot memory:
 # 🏗️ Architecture
 
 ```
-                    Google OAuth
+                    Streamlit OAuth
                           │
                           ▼
                   Streamlit Frontend
@@ -137,13 +137,10 @@ Unlike temporary chatbot memory:
 - FastAPI
 
 ## AI
-
-- LangChain
 - Groq LLM
 
 ## Authentication
 
-- Google OAuth
 - streamlit-oauth
 
 ## Database
@@ -153,7 +150,7 @@ Unlike temporary chatbot memory:
 ## APIs
 
 - Twilio
-- Google OAuth
+- Streamlit OAuth
 
 ---
 
@@ -175,7 +172,7 @@ SafeSpace/
 │   └── main.py
 │
 ├── frontend.py
-├── google_auth.py
+├── Streamlit_auth.py
 ├── .env
 ├── pyproject.toml
 └── README.md
@@ -189,7 +186,7 @@ SafeSpace/
 Users
 -----
 id
-google_id
+Streamlit_id
 name
 email
 picture
@@ -248,9 +245,9 @@ pip install -r requirements.txt
 Create a `.env`
 
 ```env
-GOOGLE_CLIENT_ID=
+Streamlit_CLIENT_ID=
 
-GOOGLE_CLIENT_SECRET=
+Streamlit_CLIENT_SECRET=
 
 GROQ_API_KEY=
 
@@ -287,22 +284,10 @@ streamlit run frontend.py
 
 ---
 
-# 📸 Screenshots
-
-| Login | Chat |
-|-------|------|
-| Add Screenshot | Add Screenshot |
-
-| Mood Calendar | Journal |
-|--------------|---------|
-| Add Screenshot | Add Screenshot |
-
----
-
 # 🔒 Privacy
 
 - User-specific encrypted sessions
-- Google Authentication
+- Streamlit Authentication
 - Personal data isolated per user
 - No shared conversations
 
