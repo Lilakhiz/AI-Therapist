@@ -227,7 +227,7 @@ journal
 ## Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/SafeSpace.git
+git clone https://github.com/Lilakhiz/SafeSpace.git
 
 cd SafeSpace
 ```
