@@ -16,6 +16,8 @@ SafeSpace is an AI-powered mental health companion designed to provide users wit
 
 Unlike a traditional chatbot, SafeSpace provides **persistent user accounts**, **daily mood tracking**, **journaling**, **conversation history**, and **crisis detection** with emergency contact support.
 
+Demo : https://safespace-by-akhilesh.streamlit.app/
+
 ---
 
 # ✨ Features
